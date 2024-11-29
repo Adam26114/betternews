@@ -1,16 +1,19 @@
-import { drizzle } from "drizzle-orm/postgres-js";
-
-import postgres from "postgres";
+import { drizzle } from "drizzle-orm/mysql2";
+import mysql from "mysql2/promise";
 import { z } from "zod";
 
 const EnvSchema = z.object({
-  DATABASE_URL: z.string().url(),
+  DATABASE_URL: z.string(),
 });
 
-const proessenv = EnvSchema.parse(process.env);
+const processenv = EnvSchema.parse(process.env);
 
-const queryClient = postgres(proessenv.DATABASE_URL);
-const db = drizzle(queryClient);
+// Create the connection
+const connection = await mysql.createConnection({
+  uri: processenv.DATABASE_URL
+});
 
-// const result = await db.execute("select 1");
-// console.log(result);
+// Create the db instance
+export const db = drizzle(connection);
+const result = await db.execute("select 1");
+console.log(result);
