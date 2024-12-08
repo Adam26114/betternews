@@ -1,9 +1,10 @@
-import { drizzle } from "drizzle-orm/mysql2";
+import { drizzle } from "drizzle-orm/neon-http";
 
-import { sessionTable, userTable } from "@/db/schema/auth";
-import { DrizzleMySQLAdapter } from "@lucia-auth/adapter-drizzle";
-import mysql from "mysql2/promise";
+import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
+import { neon } from "@neondatabase/serverless";
 import { z } from "zod";
+
+import { sessionTable, userTable } from "./db/schemas/auth";
 
 const EnvSchema = z.object({
   DATABASE_URL: z.string().url(),
@@ -11,14 +12,17 @@ const EnvSchema = z.object({
 
 const processEnv = EnvSchema.parse(process.env);
 
-const pool = mysql.createPool(processEnv.DATABASE_URL);
+const sql = neon(processEnv.DATABASE_URL);
 
-export const db = drizzle(pool, {
-  mode: "default",
+export const db = drizzle(sql, {
   schema: {
     user: userTable,
     session: sessionTable,
   },
 });
 
-export const adapter = new DrizzleMySQLAdapter(db, sessionTable, userTable);
+export const adapter = new DrizzlePostgreSQLAdapter(
+  db,
+  sessionTable,
+  userTable,
+);

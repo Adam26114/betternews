@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 
 import { db } from "@/adapter";
 import type { Context } from "@/context";
-import { userTable } from "@/db/schema/auth";
+import { userTable } from "@/db/schemas/auth";
 import { lucia } from "@/lucia";
 import { loggedIn } from "@/middleware/loggedIn";
 import { zValidator } from "@hono/zod-validator";
