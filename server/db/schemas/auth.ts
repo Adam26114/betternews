@@ -1,9 +1,9 @@
 import { relations } from "drizzle-orm";
 import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
-import { commentsTable } from "./comment";
-import { postsTable } from "./post";
-import { commentUpvotesTable, postUpvotesTable } from "./upvote";
+import { commentsTable } from "@/db/schemas/comment";
+import { postsTable } from "@/db/schemas/post";
+import { commentUpvotesTable, postUpvotesTable } from "@/db/schemas/upvote";
 
 export const userTable = pgTable("user", {
   id: text("id").primaryKey(),

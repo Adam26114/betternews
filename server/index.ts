@@ -8,6 +8,8 @@ import { authRoutes } from "@/routes/auth";
 
 import { type ErrorResponse } from "@/shared/type";
 
+import { postRouter } from "./routes/post";
+
 const app = new Hono<Context>();
 
 app.use("*", cors(), async (c, next) => {
@@ -34,7 +36,10 @@ app.use("*", cors(), async (c, next) => {
   return next();
 });
 
-const routes = app.basePath("/api/").route("/auth", authRoutes);
+const routes = app
+  .basePath("/api/")
+  .route("/auth", authRoutes)
+  .route("/posts", postRouter);
 
 app.onError((err, c) => {
   if (err instanceof HTTPException) {

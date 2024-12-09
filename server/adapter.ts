@@ -1,7 +1,7 @@
-import { drizzle } from "drizzle-orm/neon-http";
+import { drizzle } from "drizzle-orm/postgres-js";
 
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
-import { neon } from "@neondatabase/serverless";
+import postgres from "postgres";
 import { z } from "zod";
 
 import { sessionTable, userTable } from "./db/schemas/auth";
@@ -12,9 +12,8 @@ const EnvSchema = z.object({
 
 const processEnv = EnvSchema.parse(process.env);
 
-const sql = neon(processEnv.DATABASE_URL);
-
-export const db = drizzle(sql, {
+const queryClient = postgres(processEnv.DATABASE_URL);
+export const db = drizzle(queryClient, {
   schema: {
     user: userTable,
     session: sessionTable,

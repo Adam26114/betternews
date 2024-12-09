@@ -1,13 +1,11 @@
 import { relations } from "drizzle-orm";
 import { integer, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 
+import { userTable } from "@/db/schemas/auth";
+import { commentsTable } from "@/db/schemas/comment";
+import { postUpvotesTable } from "@/db/schemas/upvote";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
-
-import { userTable } from "./auth";
-import { postUpvotesTable } from "./upvote";
-import { commentsTable } from "./comment";
-
 
 export const postsTable = pgTable("posts", {
   id: serial("id").primaryKey(),

@@ -1,9 +1,9 @@
-import globals from "globals";
 import pluginJs from "@eslint/js";
-import tseslint from "typescript-eslint";
-import drizzlePlugin from "eslint-plugin-drizzle";
 import eslintPrettierConfig from "eslint-config-prettier";
+import drizzlePlugin from "eslint-plugin-drizzle";
 import { finUpPluginRules } from "eslint/conpat";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
